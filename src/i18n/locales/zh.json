@@ -1,3 +1,9 @@
 {
-    "login": "登入"
+    "Login": {
+        "login": "登入",
+        "test": "測試",
+        "login_error": "請輸入帳號密碼",
+        "username": "帳號",
+        "password": "密碼"
+    }
 }

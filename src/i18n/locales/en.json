@@ -1,3 +1,9 @@
 {
-    "login": "Login"
+    "Login": {
+        "login": "Login",
+        "test": "測試",
+        "login_error": "Please enter your account password ",
+        "username": "account",
+        "password": "password"
+    }
 }

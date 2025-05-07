@@ -10,8 +10,8 @@ i18n
     .use(initReactI18next)
     .init({
         resources: {
-            en: { translation: en },
-            zh: { translation: zh }
+            en: { ...en },
+            zh: { ...zh }
         },
         fallbackLng: 'zh',
         interpolation: {
