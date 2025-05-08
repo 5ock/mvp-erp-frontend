@@ -10,14 +10,14 @@ const Login = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme()
 
-    const [ usename, setUsename ] = useState<string>('')
+    const [ username, setUsername ] = useState<string>('')
     const [ password, setPassword ] = useState<string>('')
     const [ errorMsg, setErrorMsg ] = useState<string>('')
 
     const handleLogin = () => {
         setErrorMsg('')
-        if(usename && password)
-            navigate('/dashboard/products')
+        if(username && password)
+            navigate('/dashboard')
         else
             setErrorMsg(t('login_error'))
     }
@@ -44,8 +44,8 @@ const Login = () => {
             <input
                 type='text'
                 placeholder={t('username')}
-                value={usename}
-                onChange={(e) => setUsename(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400'
             />
             <input
