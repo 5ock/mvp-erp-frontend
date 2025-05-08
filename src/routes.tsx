@@ -1,7 +1,7 @@
 import type { RouteObject } from 'react-router-dom'
 
 import Login from './pages/Login'
-import DashboardLayout from './pages/dashboard/Layout'
+import AuthenticatedLayout from './layouts/AuthenticatedLayout'
 import Dashobard from './pages/dashboard/index'
 import Products from './pages/dashboard/Products'
 import Orders from './pages/dashboard/Orders'
@@ -10,7 +10,7 @@ export const routes: RouteObject[] = [
     { path: '/', element: <Login />},
     {
         path: '/dashboard',
-        element: <DashboardLayout />,
+        element: <AuthenticatedLayout />,
         children: [
             { index: true, element: <Dashobard /> },
             { path: 'products', element: <Products /> },

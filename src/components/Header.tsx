@@ -1,12 +1,22 @@
 import { useTheme } from '../contexts/ThemeContext'
 import { useTranslation} from 'react-i18next'
-import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'
+import { SunIcon, MoonIcon, Bars3Icon } from '@heroicons/react/24/outline'
 
-const Header = () => {
+type HeaderProps = {
+    onToggleSidebar: () => void;
+}
+
+const Header = ({ onToggleSidebar }: HeaderProps) => {
     const { theme, toggleTheme } = useTheme()
     const { i18n } = useTranslation()
 
     return (<div className='flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800'>
+        <div className='md:hidden'>
+            <button onClick={onToggleSidebar}>
+                <Bars3Icon className='h-6 w-6 text-gray-800 dark:text-white' />
+            </button>
+        </div>
+
         <div className='font-bold text-xl'>MVP ERP</div>
         <div className='flex items-center space-x-4'>
             <select
