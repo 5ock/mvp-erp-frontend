@@ -5,5 +5,9 @@
         "login_error": "請輸入帳號密碼",
         "username": "帳號",
         "password": "密碼"
+    },
+    "Sidebar": {
+        "products": "商品列表",
+        "orders": "訂單"
     }
 }

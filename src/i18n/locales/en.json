@@ -5,5 +5,9 @@
         "login_error": "Please enter your account password ",
         "username": "account",
         "password": "password"
+    },
+    "Sidebar": {
+        "products": "Products",
+        "orders": "Orders"
     }
 }
