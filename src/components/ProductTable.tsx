@@ -12,7 +12,7 @@ type Props = {
 
 const ProductTable = ({ products, onEdit, onDelete }: Props) => {
     const { t } = useTranslation('Products')
-    const [ sort, setSort ] = useState(null)
+    const [ sort, setSort ] = useState<{ field: string | number, direction: 'asc' | 'desc' }>({ field: 'name', direction: 'desc' })
 
     const sortedProducts = () => {}
 
@@ -26,8 +26,8 @@ const ProductTable = ({ products, onEdit, onDelete }: Props) => {
     return (<DataTable
         data={products}
         columns={tableTh}
-        sortState={sort ?? undefined}
-        onSort={(newSort) => setSort(null)}
+        sortState={sort}
+        // onSort={(newSort) => setSort(null)}
         renderRow={(p) => (
           <>
             <td className="p-2 border">{p.name}</td>

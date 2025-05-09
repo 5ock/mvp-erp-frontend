@@ -38,6 +38,8 @@ const DataTable = <T extends { id: number | string }>({
 
         onSort({ field, direction })
     }
+    
+    console.log(sortState)
 
     return (<table
         className='w-full border border-gray-300 dark:border-gray-600 text-sm'
