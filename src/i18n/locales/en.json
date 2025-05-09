@@ -15,6 +15,14 @@
         "name": "Name",
         "price": "Price",
         "stock": "Stock",
-        "actions": "Actions"
+        "actions": "Actions",
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "Global": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "confirm": "Confirm"
     }
 }

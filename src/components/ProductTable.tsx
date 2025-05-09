@@ -38,13 +38,13 @@ const ProductTable = ({ products, onEdit, onDelete }: Props) => {
                 onClick={() => onEdit(p)}
                 className="text-blue-600 hover:underline"
               >
-                Edit
+                { t('edit')} 
               </button>
               <button
                 onClick={() => onDelete(p.id)}
                 className="text-red-600 hover:underline"
               >
-                Delete
+                { t('delete') }
               </button>
             </td>
           </>

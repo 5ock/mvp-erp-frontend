@@ -12,9 +12,19 @@
     },
     "Products": {
         "products": "商品列表",
+        "product": "商品",
         "name": "名稱",
         "price": "價格",
         "stock": "庫存",
-        "actions": "Actions"
+        "actions": "Actions",
+        "add": "新增",
+        "edit": "編輯",
+        "delete": "刪除",
+        "deletePrompt": "是否要刪除"
+    },
+    "Global": {
+        "cancel": "取消",
+        "save": "儲存",
+        "confirm": "確認"
     }
 }
