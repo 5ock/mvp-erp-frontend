@@ -9,5 +9,12 @@
     "Sidebar": {
         "products": "商品列表",
         "orders": "訂單"
+    },
+    "Products": {
+        "products": "商品列表",
+        "name": "名稱",
+        "price": "價格",
+        "stock": "庫存",
+        "actions": "Actions"
     }
 }

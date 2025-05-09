@@ -9,5 +9,12 @@
     "Sidebar": {
         "products": "Products",
         "orders": "Orders"
+    },
+    "Products": {
+        "products": "Products",
+        "name": "Name",
+        "price": "Price",
+        "stock": "Stock",
+        "actions": "Actions"
     }
 }
