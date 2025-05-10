@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 type Props = {
     open: boolean;
     onClose: () => void;
@@ -8,6 +10,18 @@ type Props = {
 
 const Modal = (props: Props) => {
     const { open, onClose, title, children, footer } = props
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if(e.key === 'Escape')
+                onClose()
+        }
+    
+        if(open)
+          document.addEventListener('keydown', handleKeyDown)
+    
+        return () => document.removeEventListener('keydown', handleKeyDown)
+      }, [open, onClose])
 
     if(!open)
         return null

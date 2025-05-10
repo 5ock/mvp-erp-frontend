@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import OrderTable from '../../components/OrderTable'
+import OrderModal from '../../components/OrderModal'
 
 import type { Order } from '../../types/order'
 
@@ -60,6 +61,8 @@ const Orders = () => {
         console.log('delete item id: ', + id)
     }
 
+    const handleSaveOrder = (o: Order) => {}
+
     return (<div className="space-y-6">
         <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold">{ t('orders') }</h1>
@@ -76,6 +79,14 @@ const Orders = () => {
             onViewDetails={handleViewDetails}
             onEdit={handleEditOrder}
             onDelete={handleDelete}
+        />
+
+        <OrderModal
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            mode={modalType}
+            selectedOrder={selectedOrder}
+            onSave={handleSaveOrder}
         />
     </div>)
 }

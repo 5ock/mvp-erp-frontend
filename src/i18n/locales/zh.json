@@ -38,6 +38,8 @@
         "confirm": "確認",
         "add": "新增",
         "edit": "編輯",
-        "delete": "刪除"
+        "delete": "刪除",
+        "close": "關閉",
+        "detail": "詳細資訊"
     }
 }

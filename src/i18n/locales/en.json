@@ -36,6 +36,8 @@
         "confirm": "Confirm",
         "add": "Add",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "close": "Close",
+        "detail": "Detail" 
     }
 }
