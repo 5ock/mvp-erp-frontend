@@ -9,6 +9,7 @@ import type { Product } from '../../types/product'
 
 const Products = () => {
     const { t } = useTranslation('Products')
+    const { t: gt } = useTranslation('Global')
     const [ products, setProducts ] = useState<Product[]>([
         { id: 1, name: 'keyboard', price: 1200, stock: 15 },
         { id: 2, name: 'Mouse', price: 800, stock: 30 }
@@ -18,7 +19,13 @@ const Products = () => {
     const [ deletingProduct, setDeletingProduct ] = useState<Product | null>(null)
 
     const handleSave = (product: Product) => {
-        console.log(product)
+        if(Number(product.id) === 0) {
+            const newId = Math.max(...products.map(p => Number(p.id)), 0) + 1
+            setProducts([...products, { ...product, id: newId }])
+        } else {
+            setProducts(products.map(p => p.id === product.id ? product : p))
+        }
+        setModalOpen(false)
     }
 
     const handleDelete = (id: string | number) => {
@@ -45,7 +52,7 @@ const Products = () => {
                     setEditingProduct(null)
                     setModalOpen(true)
                 }}
-            >{ t('add') }</button>
+            >{ gt('add') }</button>
         </div>
 
         <ProductTable

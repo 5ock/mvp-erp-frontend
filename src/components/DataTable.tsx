@@ -5,6 +5,7 @@ type Column = {
     label: string;
     enableSort?: boolean;
     isDataColumn?: boolean;
+    width?: string;
 }
 
 type SortState = {
@@ -27,6 +28,9 @@ const DataTable = <T extends { id: number | string }>({
     onSort,
     sortState
 }: Props<T>) => {
+    const autoWidthColumns = columns.filter(col => !col.width).length
+    const defaultWidth = autoWidthColumns > 0 ? `${100 / autoWidthColumns}%` : 'auto'
+
     const dataColumns = columns.filter(col => col.isDataColumn)
     const handleSort = (field: string | number) => {
         if(!onSort || !dataColumns.some(col => col.id === field))
@@ -47,7 +51,11 @@ const DataTable = <T extends { id: number | string }>({
                 { columns.map((col) => (
                     <th
                         key={String(col.id)}
-                        className='p-2 border curosr-pointer select-none'
+                        className={`p-2 border curosr-pointer select-none ${col.enableSort && 'cursor-pointer'}`}
+                        style={{ 
+                            width: col.width || defaultWidth,
+                            minWidth: '50px'
+                        }}
                     >
                         <div
                             className='flex items-center space-x-1'

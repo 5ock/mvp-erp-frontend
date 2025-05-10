@@ -16,13 +16,26 @@
         "price": "Price",
         "stock": "Stock",
         "actions": "Actions",
-        "add": "Add",
-        "edit": "Edit",
-        "delete": "Delete"
+        "deletePrompt": "Do you want to delete"
+    },
+    "Orders": {
+        "orders": "Orders",
+        "code": "Code No.",
+        "customer": "Customer",
+        "date": "Date",
+        "total": "Total",
+        "status": "Status",
+        "pending": "Pending",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled"
     },
     "Global": {
         "cancel": "Cancel",
         "save": "Save",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

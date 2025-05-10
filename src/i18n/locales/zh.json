@@ -16,15 +16,28 @@
         "name": "名稱",
         "price": "價格",
         "stock": "庫存",
-        "actions": "Actions",
-        "add": "新增",
-        "edit": "編輯",
-        "delete": "刪除",
+        "actions": "操作",
         "deletePrompt": "是否要刪除"
+    },
+    "Orders": {
+        "orders": "訂單列表",
+        "code": "訂單編號",
+        "customer": "客戶名稱",
+        "date": "訂單時間",
+        "total": "總金額",
+        "status": "狀態",
+        "pending": "未處理",
+        "shipped": "已發貨",
+        "delivered": "已送達",
+        "cancelled": "已取消",
+        "actions": "操作"
     },
     "Global": {
         "cancel": "取消",
         "save": "儲存",
-        "confirm": "確認"
+        "confirm": "確認",
+        "add": "新增",
+        "edit": "編輯",
+        "delete": "刪除"
     }
 }

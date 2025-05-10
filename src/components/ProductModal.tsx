@@ -60,13 +60,14 @@ const ProductModal =({ open, onClose, onSave, product }: Props) => {
             </button>
             <button
                 type='submit'
+                form='product-form'
                 className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'
             >
                 { gt('save') }
             </button>
         </>}
     >
-        <form id="product-form" onSubmit={handleSubmit} className="space-y-4">
+        <form id='product-form' onSubmit={handleSubmit} className="space-y-4">
             <div>
                 <label className='block text-sm'>{ t('name') }</label>
                 <input
