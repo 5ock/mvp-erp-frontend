@@ -15,6 +15,7 @@ const Products = () => {
     const [ products, setProducts ] = useState<Product[]>(fakeData)
     const [ editingProduct, setEditingProduct ] = useState<Product | null>(null)
     const [ isModalOpen, setModalOpen ] = useState<boolean>(false)
+    const [ modalType, setModalType ] = useState<'view' | 'add' | 'edit' | null>(null)
     const [ deletingProduct, setDeletingProduct ] = useState<Product | null>(null)
 
     const handleSave = (product: Product) => {
@@ -24,6 +25,24 @@ const Products = () => {
         } else {
             setProducts(products.map(p => p.id === product.id ? product : p))
         }
+        setModalOpen(false)
+    }
+
+    const handleAddProduct = () => {
+        setEditingProduct(null)
+        setModalType('add')
+        setModalOpen(true)
+    }
+
+    const handleEditProduct = (product: Product) => {
+        setEditingProduct(product)
+        setModalType('edit')
+        setModalOpen(true)
+    }
+
+    const handleModalClose = () => {
+        setEditingProduct(null)
+        setModalType(null)
         setModalOpen(false)
     }
 
@@ -42,40 +61,35 @@ const Products = () => {
         }
     }
 
-    return (<div className='space-y-4'>
+    return (<div className='space-y-6'>
         <div className='flex justify-between items-center'>
             <h1 className='text-2xl font-bold'>{ t('products') }</h1>
             <button
                 className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
-                onClick={() => {
-                    setEditingProduct(null)
-                    setModalOpen(true)
-                }}
+                onClick={handleAddProduct}
             >{ gt('add') }</button>
         </div>
 
         <ProductTable
             products={products}
-            onEdit={(p) => {
-                setEditingProduct(p);
-                setModalOpen(true);
-            }}
+            onEdit={handleEditProduct}
             onDelete={handleDelete}
         />
 
         <ProductModal
             open={isModalOpen}
-            onClose={() => setModalOpen(false)}
+            mode={modalType}
+            onClose={handleModalClose}
             onSave={handleSave}
             product={editingProduct}
         />
 
         <PromptModal
-            title={t('delete')+t('product')}
+            title={gt('delete') + t('product')}
             open={!!deletingProduct}
             onClose={() => setDeletingProduct(null)}
             onConfirm={confirmDelete}
-            prompts={<span>{ t('deletePrompt') }: { deletingProduct?.name }</span>}
+            prompts={<span>{ gt('deletePrompt') }: { deletingProduct?.name }</span>}
         />
     </div>)
 }

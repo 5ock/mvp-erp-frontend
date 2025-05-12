@@ -15,7 +15,7 @@ const ProductTable = ({ products, onEdit, onDelete }: Props) => {
     const { t } = useTranslation('Products')
     const [ sort, setSort ] = useState<{ field: string | number, direction: 'asc' | 'desc' }>({
         field: 'name',
-        direction: 'desc'
+        direction: 'asc'
     })
 
     const sortedProducts = useMemo(() => {
@@ -54,13 +54,13 @@ const ProductTable = ({ products, onEdit, onDelete }: Props) => {
             <td className='p-2 border space-x-2'>
                 <button
                     onClick={() => onEdit(p)}
-                    className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded'
+                    className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-300 rounded'
                 >
                     <PencilSquareIcon className='h-5 w-5' />
                 </button>
                 <button
                     onClick={() => onDelete(p.id)}
-                    className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded'
+                    className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-300 rounded'
                 >
                     <TrashIcon className='h-5 w-5' />
                 </button>

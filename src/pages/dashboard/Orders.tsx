@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next'
 
 import OrderTable from '../../components/OrderTable'
 import OrderModal from '../../components/OrderModal'
+import PromptModal from '../../components/PromptModal'
 
 import type { Order } from '../../types/order'
 
 const testData: Order[] = [
     {
       id: 1,
+      orderNumber: 1,
       customer: 'Alice',
       date: '2025-05-01',
       items: [
@@ -21,6 +23,7 @@ const testData: Order[] = [
     {
       id: 2,
       customer: 'Bob',
+      orderNumber: 2,
       date: '2025-05-02',
       items: [
         { id: 1, name: 'Keyboard', price: 1200, quantity: 1 },
@@ -57,6 +60,12 @@ const Orders = () => {
         setIsModalOpen(true)
     }
 
+    const handleModalClose = () => {
+        setIsModalOpen(false)
+        setModalType(null)
+        setSelectedOrder(null)
+    }
+
     const handleDelete = (id: string | number) => {
         console.log('delete item id: ', + id)
     }
@@ -83,11 +92,19 @@ const Orders = () => {
 
         <OrderModal
             open={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            onClose={handleModalClose}
             mode={modalType}
             selectedOrder={selectedOrder}
             onSave={handleSaveOrder}
         />
+
+        {/* <PromptModal
+            title={t('delete') + t('product')}
+            open={!!deletingProduct}
+            onClose={() => setDeletingProduct(null)}
+            onConfirm={confirmDelete}
+            prompts={<span>{ t('deletePrompt') }: { deletingProduct?.name }</span>}
+        /> */}
     </div>)
 }
 

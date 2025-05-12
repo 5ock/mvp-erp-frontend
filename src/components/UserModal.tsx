@@ -54,17 +54,27 @@ const UserModal = (props: Props) => {
         })
     }
 
+    const handleClose = () => {
+        setFormData({
+            name: '',
+            email: '',
+            password: '',
+            role: 'staff',
+        })
+        onClose && onClose()
+    }
+
     if(!open)
         return null
 
   return (<Modal
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         title={mode === 'edit' ? gt('edit') : gt('add')}
         footer={(<>
             <button
                 type='button'
-                onClick={onClose}
+                onClick={handleClose}
                 className='px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500'
             >
                 {gt('cancel')}
@@ -100,30 +110,33 @@ const UserModal = (props: Props) => {
             {mode !== 'view' && (
                 <TextInputField
                     label={t('password')}
-                    type='text'
+                    type='password'
                     value={formData.password!}
                     onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
                     required={mode === 'add'}
                 />
             )}
             <div>
-                <label className='block text-sm mb-2'>{ t('role') }</label>
-                <div className='flex gap-4'>
-                    {(['admin', 'staff'] as const).map((role) => (
-                    <label key={role} className='flex items-center gap-2'>
-                        <input
-                            type='radio'
-                            name='role'
-                            value={role}
-                            checked={formData.role === role}
-                            onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value as User['role'] }))}
-                            readOnly={mode === 'view'}
-                            disabled={mode === 'view'}
-                        />
-                        <span>{t(role)}</span>
-                    </label>
-                    ))}
-                </div>
+                <label className='block text-sm mb-2'>{ t('role') }:</label>
+                { formData?.role === 'customer'
+                    ? (<span className='pl-4'>{formData.role}</span>)
+                    : (<div className='flex gap-4'>
+                        {(['admin', 'staff'] as const).map((role) => (
+                            <label key={role} className='flex items-center gap-2'>
+                                <input
+                                    type='radio'
+                                    name='role'
+                                    value={role}
+                                    checked={formData.role === role}
+                                    onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value as User['role'] }))}
+                                    readOnly={mode === 'view'}
+                                    disabled={mode === 'view'}
+                                />
+                                <span>{t(role)}</span>
+                            </label>
+                        ))}
+                    </div>)
+                }
             </div>
         </form>
     </Modal>)

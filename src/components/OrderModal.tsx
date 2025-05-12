@@ -25,6 +25,7 @@ const OrderModal = (props: Props) => {
 
     const [ formData, setFormData ] = useState<Omit<Order, 'id' | 'total'>>({
         customer: '',
+        orderNumber: -1,
         date: new Date().toISOString().split('T')[0],
         status: 'pending',
         items: [],
@@ -32,14 +33,15 @@ const OrderModal = (props: Props) => {
 
     useEffect(() => {
         if(selectedOrder) {
-          const { customer, date, status, items } = selectedOrder
-          setFormData({ customer, date, status, items })
+          const { customer, orderNumber, date, status, items } = selectedOrder
+          setFormData({ customer, orderNumber, date, status, items })
         } else {
             setFormData({
-              customer: '',
-              date: new Date().toISOString().split('T')[0],
-              status: 'pending',
-              items: [],
+                customer: '',
+                orderNumber: -1,
+                date: new Date().toISOString().split('T')[0],
+                status: 'pending',
+                items: [],
             })
         }
     }, [selectedOrder, mode])
@@ -94,6 +96,17 @@ const OrderModal = (props: Props) => {
         })
     }
 
+    const handleClose = () => {
+        setFormData({
+            customer: '',
+            orderNumber: -1,
+            date: new Date().toISOString().split('T')[0],
+            status: 'pending',
+            items: [],
+        })
+        onClose && onClose()
+    }
+
     if(!open)
         return null
 
@@ -114,7 +127,7 @@ const OrderModal = (props: Props) => {
 
     return (<Modal
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         title={mode === 'view'
           ? gt('detail')
           : mode === 'edit'
@@ -124,13 +137,13 @@ const OrderModal = (props: Props) => {
         footer={mode === 'view'
             ? (<button
                 type='button'
-                onClick={onClose}
+                onClick={handleClose}
                 className='px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500'
             >{ gt('close') }</button>)
             : (<>
                 <button
                     type='button'
-                    onClick={onClose}
+                    onClick={handleClose}
                     className='px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500'
                 >
                     {gt('cancel')}
@@ -151,6 +164,12 @@ const OrderModal = (props: Props) => {
             className='space-y-4'
         >
             <TextInputField
+                label={t('orderNumber')}
+                value={formData.orderNumber}
+                onChange={() => {}}
+                readOnly={true}
+            />
+            <TextInputField
                 label={t('customer')}
                 value={formData.customer}
                 onChange={(e) => setFormData((prev) => ({...prev, customer: e.target.value}))}
@@ -166,7 +185,7 @@ const OrderModal = (props: Props) => {
                 required
             />
             <div>
-                <label className='block text-sm mb-2'>{ t('status') }</label>
+                <label className='block text-sm mb-2'>{ t('status') }:</label>
                 <div className='flex flex-wrap gap-4 justify-between'>
                     {(['pending', 'shipped', 'delivered', 'cancelled'] as Order['status'][]).map((status) => (
                         <label key={status} className='flex items-center space-x-2'>
@@ -190,11 +209,21 @@ const OrderModal = (props: Props) => {
                 </div>
             </div>
             <div>
-                <label className='block text-sm mb-2'>{t('items')}</label>
+                <label className='block text-sm mb-2'>{t('products')}:</label>
                 <div className='space-y-2'>
                     { formData.items.map((item, index) => {
                         const product = productOptions.find(p => p.value === item.id)
                         const maxQuantity = product ? product.stock : 0
+
+                        if(mode === 'view') {
+                            return (<div className='flex gap-2 mb-2 w-full'>
+                                <div className='grid grid-cols-3 gap-2 mb-2'>
+                                    <span>{item.id}</span>
+                                    <span>{item.price}</span>
+                                    <span>{item.quantity}</span>
+                                </div>
+                            </div>)
+                        }
 
                         return (<div key={item.id} className='flex gap-2 mb-2'>
                             <div className='grid grid-cols-3 gap-2 mb-2'>
@@ -215,7 +244,6 @@ const OrderModal = (props: Props) => {
                                         }
                                     }}
                                     options={getAvailableOptions(item.id)}
-                                    disabled={mode === 'view'}
                                 />
                                 <input
                                     type='number'
@@ -231,19 +259,16 @@ const OrderModal = (props: Props) => {
                                     className='p-2 border rounded bg-transparent dark:border-gray-600'
                                     placeholder={t('quantity')}
                                     max={maxQuantity}
-                                    readOnly={mode === 'view'}
                                 />
                             </div>
-                            {mode !== 'view' && (
-                                <button
-                                    type="button"
-                                    onClick={() => removeItem(index)}
-                                    className="flex self-center items-center text-red-400 hover:text-red-600 text-sm"
-                                    title={gt('delete')}
-                                >
-                                    <TrashIcon className='w-6 h-6' />
-                                </button>
-                            )}
+                            <button
+                                type="button"
+                                onClick={() => removeItem(index)}
+                                className="flex self-center items-center text-red-400 hover:text-red-600 text-sm"
+                                title={gt('delete')}
+                            >
+                                <TrashIcon className='w-6 h-6' />
+                            </button>
                         </div>
                         )
                     })}

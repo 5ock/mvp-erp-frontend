@@ -10,9 +10,11 @@ type Props = {
     onClose: () => void;
     onSave: (p: Product) => void;
     product: Product | null;
+    mode: 'add' | 'edit' | 'view' | null; 
 }
 
-const ProductModal =({ open, onClose, onSave, product }: Props) => {
+const ProductModal =(props: Props) => {
+    const { open, onClose, onSave, product, mode } = props
     const { t } = useTranslation('Products')
     const { t: gt } = useTranslation('Global')
 
@@ -46,14 +48,21 @@ const ProductModal =({ open, onClose, onSave, product }: Props) => {
         })
     }
 
+    const handleClose = () => {
+        setName('')
+        setPrice(0)
+        setStock(0)
+        onClose && onClose()
+    }
+
     return (<Modal
         open={open}
-        onClose={onClose}
-        title={ product ? t('edit') : t('add') }
+        onClose={handleClose}
+        title={mode === 'edit' ? gt('edit') : gt('add') }
         footer={<>
             <button
                 type='button'
-                onClick={onClose}
+                onClick={handleClose}
                 className='px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500'
             >
                 { gt('cancel') }

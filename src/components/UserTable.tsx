@@ -53,13 +53,13 @@ const UserTable = (props: Props) => {
                 { user.role !== 'admin' && <>
                     <button
                         onClick={() => onEdit(user)}
-                        className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded'
+                        className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-300 rounded'
                     >
                         <PencilSquareIcon className='w-5 h-5' />
                     </button>
                     <button
                         onClick={() => onDelete(user.id)}
-                        className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded'
+                        className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-300 rounded'
                     >
                         <TrashIcon className="w-5 h-5" />
                     </button>

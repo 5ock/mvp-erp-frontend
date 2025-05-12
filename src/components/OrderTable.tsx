@@ -18,7 +18,7 @@ const OrderTable = (props: Props) => {
     const { orders, onEdit, onDelete, onViewDetails } = props
     const [ sort, setSort ] = useState<{ field: string | number, direction: 'asc' | 'desc' }>({
         field: 'date',
-        direction: 'desc'
+        direction: 'asc'
     })
 
     const sortedOrders = useMemo(() => {
@@ -56,10 +56,10 @@ const OrderTable = (props: Props) => {
                         o.status === 'pending'
                             ? 'bg-yellow-500 text-white'
                             : o.status === 'shipped'
-                            ? 'bg-blue-500 text-white'
-                            : o.status === 'delivered'
-                            ? 'bg-green-500 text-white'
-                            : 'bg-red-500 text-white'
+                                ? 'bg-blue-500 text-white'
+                                : o.status === 'delivered'
+                                    ? 'bg-green-500 text-white'
+                                    : 'bg-red-500 text-white'
                     }`}
                 >
                     {o.status}
@@ -68,19 +68,19 @@ const OrderTable = (props: Props) => {
               <td className='p-2 space-x-2 border'>
                     <button
                         onClick={() => onEdit(o)}
-                        className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded'
+                        className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-300 rounded'
                     >
                         <PencilSquareIcon className="h-5 w-5" />
                     </button>
                     <button
                         onClick={() => onDelete(o.id)}
-                        className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded'
+                        className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-300 rounded'
                     >
                         <TrashIcon className="h-5 w-5" />
                     </button>
                     <button
                         onClick={() => onViewDetails(o)}
-                        className='p-1 text-gray-600 hover:bg-blue-100 dark:hover:bg-gray-800 rounded'
+                        className='p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-300 rounded'
                     >
                         <InformationCircleIcon className='h-5 w-5' />
                     </button>

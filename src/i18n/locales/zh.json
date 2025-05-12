@@ -17,8 +17,7 @@
         "name": "名稱",
         "price": "價格",
         "stock": "庫存",
-        "actions": "操作",
-        "deletePrompt": "是否要刪除"
+        "actions": "操作"
     },
     "Orders": {
         "orders": "訂單列表",
@@ -32,7 +31,9 @@
         "delivered": "已送達",
         "cancelled": "已取消",
         "actions": "操作",
-        "items": "品項"
+        "items": "品項",
+        "products": "商品",
+        "orderNumber": "訂單編號"
     },
     "Users": {
         "user": "使用者",
@@ -51,6 +52,7 @@
         "edit": "編輯",
         "delete": "刪除",
         "close": "關閉",
-        "detail": "詳細資訊"
+        "detail": "詳細資訊",
+        "deletePrompt": "是否要刪除"
     }
 }
