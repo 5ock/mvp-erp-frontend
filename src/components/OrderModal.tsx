@@ -31,6 +31,13 @@ const OrderModal = (props: Props) => {
         items: [],
     })
 
+    const productOptions = products.map(p => ({
+        value: p.id,
+        label: p.name,
+        price: p.price,
+        stock: p.stock
+    }))
+
     useEffect(() => {
         if(selectedOrder) {
           const { customer, orderNumber, date, status, items } = selectedOrder
@@ -84,11 +91,6 @@ const OrderModal = (props: Props) => {
         e.preventDefault()
         const total = formData.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-        return console.log({
-            id: selectedOrder?.id ?? 0,
-            ...formData,
-            total,
-        })
         onSave({
             id: selectedOrder?.id ?? 0,
             ...formData,
@@ -109,13 +111,6 @@ const OrderModal = (props: Props) => {
 
     if(!open)
         return null
-
-    const productOptions = products.map(p => ({
-        value: p.id,
-        label: p.name,
-        price: p.price,
-        stock: p.stock
-    }))
 
     const selectedProductIds = formData.items.map(item => item.id)
 
@@ -163,12 +158,14 @@ const OrderModal = (props: Props) => {
             onSubmit={handleSubmit}
             className='space-y-4'
         >
-            <TextInputField
-                label={t('orderNumber')}
-                value={formData.orderNumber}
-                onChange={() => {}}
-                readOnly={true}
-            />
+            { mode === 'view' && 
+                (<TextInputField
+                    label={t('orderNumber')}
+                    value={formData.orderNumber}
+                    onChange={() => {}}
+                    readOnly={true}
+                />)
+            }
             <TextInputField
                 label={t('customer')}
                 value={formData.customer}
@@ -209,19 +206,25 @@ const OrderModal = (props: Props) => {
                 </div>
             </div>
             <div>
-                <label className='block text-sm mb-2'>{t('products')}:</label>
+                <label className='block text-sm mb-2'>{t('items')}:</label>
                 <div className='space-y-2'>
+                    {formData.items.length > 0 && (
+                        <div className={`grid grid-cols-3 gap-2 font-semibold text-sm text-gray-400 dark:text-gray-300 mb-1 ${mode !== 'view' ? 'pr-[32px]' : ''}`}>
+                            <span>{ t('product') }</span>
+                            <span>{ t('price') }</span>
+                            <span>{ t('quantity') }</span>
+                        </div>
+                    )}
                     { formData.items.map((item, index) => {
                         const product = productOptions.find(p => p.value === item.id)
                         const maxQuantity = product ? product.stock : 0
 
                         if(mode === 'view') {
-                            return (<div className='flex gap-2 mb-2 w-full'>
-                                <div className='grid grid-cols-3 gap-2 mb-2'>
-                                    <span>{item.id}</span>
+                            return (
+                                <div key={index} className='grid grid-cols-3 gap-2 w-full'>
+                                    <span>{productOptions.find(p => String(p.value) === String(item.id))!.label}</span>
                                     <span>{item.price}</span>
                                     <span>{item.quantity}</span>
-                                </div>
                             </div>)
                         }
 

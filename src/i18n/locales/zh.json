@@ -21,6 +21,7 @@
     },
     "Orders": {
         "orders": "訂單列表",
+        "order": "訂單",
         "code": "訂單編號",
         "customer": "客戶名稱",
         "date": "訂單時間",
@@ -32,7 +33,9 @@
         "cancelled": "已取消",
         "actions": "操作",
         "items": "品項",
-        "products": "商品",
+        "product": "商品",
+        "price": "價格",
+        "quantity": "數量",
         "orderNumber": "訂單編號"
     },
     "Users": {

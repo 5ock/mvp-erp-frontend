@@ -33,7 +33,9 @@
         "cancelled": "Cancelled",
         "actions": "Actions",
         "items": "Items",
-        "products": "Products",
+        "product": "Product",
+        "price": "Price",
+        "quantity": "Quantity",
         "orderNumber": "Order Number"
     },
     "Users": {

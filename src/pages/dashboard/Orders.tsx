@@ -39,38 +39,62 @@ const Orders = () => {
     const { t: gt } = useTranslation('Global')
     const [ orders, setOrders ] = useState<Order[]>(testData)
     const [ selectedOrder, setSelectedOrder ] = useState<Order | null>(null)
-    const [ isModalOpen, setIsModalOpen ] = useState<boolean>(false)
+    const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const [ modalType, setModalType ] = useState<'view' | 'add' | 'edit' | null>(null)
+    const [ deletingOrder, setDeletingOrder ] = useState<Order | null>(null)
 
     const handleViewDetails = (order: Order) => {
         setSelectedOrder(order)
         setModalType('view')
-        setIsModalOpen(true)
+        setModalOpen(true)
     }
 
     const handleAddOrder = () => {
         setSelectedOrder(null)
         setModalType('add')
-        setIsModalOpen(true)
+        setModalOpen(true)
     }
 
     const handleEditOrder = (order: Order) => {
         setSelectedOrder(order)
         setModalType('edit')
-        setIsModalOpen(true)
+        setModalOpen(true)
     }
 
     const handleModalClose = () => {
-        setIsModalOpen(false)
         setModalType(null)
         setSelectedOrder(null)
+        setModalOpen(false)
     }
 
     const handleDelete = (id: string | number) => {
         console.log('delete item id: ', + id)
+        
+        const target = orders.find((o) => o.id === id)
+        if(target)
+            setDeletingOrder(target)
     }
 
-    const handleSaveOrder = (o: Order) => {}
+    const confirmDelete = () => {
+        if(deletingOrder) {
+            setOrders(orders.filter((o) => o.id !== deletingOrder.id))
+            setDeletingOrder(null)
+        }
+
+    }
+
+    const handleSaveOrder = (order: Order) => {
+        console.log(order)
+
+        if(Number(order.id) === 0) {
+            const newId = Math.max(...orders.map(o => Number(o.id)), 0) + 1
+            const newOrderNumber = Math.max(...orders.map(o => Number(o.orderNumber), 0)) + 1
+            setOrders([...orders, { ...order, id: newId, orderNumber: newOrderNumber }])
+        } else {
+            setOrders(orders.map(o => o.id === order.id ? order : o))
+        }
+        setModalOpen(false)
+    }
 
     return (<div className='space-y-6'>
         <div className='flex justify-between items-center'>
@@ -91,20 +115,20 @@ const Orders = () => {
         />
 
         <OrderModal
-            open={isModalOpen}
+            open={modalOpen}
             onClose={handleModalClose}
             mode={modalType}
             selectedOrder={selectedOrder}
             onSave={handleSaveOrder}
         />
 
-        {/* <PromptModal
-            title={t('delete') + t('product')}
-            open={!!deletingProduct}
-            onClose={() => setDeletingProduct(null)}
+        <PromptModal
+            title={gt('delete') + t('order')}
+            open={!!deletingOrder}
+            onClose={() => setDeletingOrder(null)}
             onConfirm={confirmDelete}
-            prompts={<span>{ t('deletePrompt') }: { deletingProduct?.name }</span>}
-        /> */}
+            prompts={<span>{ gt('deletePrompt') + t('orderNumber') }: { deletingOrder?.orderNumber }</span>}
+        />
     </div>)
 }
 

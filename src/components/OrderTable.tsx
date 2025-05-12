@@ -34,6 +34,7 @@ const OrderTable = (props: Props) => {
     }, [orders, sort])
 
     const tableTh = [
+        { id: 'orderNumber', label: t('orderNumber'), isDataColumn: true, enableSort: true },
         { id: 'customer', label: t('customer'), isDataColumn: true, enableSort: true },
         { id: 'date', label: t('date'), isDataColumn: true, enableSort: true },
         { id: 'total', label: t('total'), isDataColumn: true, enableSort: true },
@@ -47,9 +48,10 @@ const OrderTable = (props: Props) => {
         sortState={sort}
         onSort={(newSort) => setSort(newSort)}
         renderRow={(o) => (<>
-            <td className='p-2 border'>{o.customer}</td>
-            <td className='p-2 border'>{o.date}</td>
-            <td className='p-2 border'>{o.total}</td>
+            <td className='p-2 border'>{ o.orderNumber }</td>
+            <td className='p-2 border'>{ o.customer }</td>
+            <td className='p-2 border'>{ o.date }</td>
+            <td className='p-2 border'>{ o.total }</td>
             <td className='p-2 border'>
                 <span
                     className={`inline-block px-2 py-1 rounded-full text-sm ${
@@ -62,7 +64,7 @@ const OrderTable = (props: Props) => {
                                     : 'bg-red-500 text-white'
                     }`}
                 >
-                    {o.status}
+                    { t(o.status) }
                 </span>
               </td>
               <td className='p-2 space-x-2 border'>

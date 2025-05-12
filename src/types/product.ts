@@ -4,3 +4,9 @@ export type Product = {
     price: number;
     stock: number;
 }
+
+export type ProductForm = {
+    name: string;
+    price: number;
+    stock: number;
+}

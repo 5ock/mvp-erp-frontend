@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Modal from './Modal'
+import TextInputField from './TextInputField'
 
-import type { Product } from '../types/product'
+import type { Product, ProductForm } from '../types/product'
 
 type Props = {
     open: boolean;
@@ -18,20 +19,18 @@ const ProductModal =(props: Props) => {
     const { t } = useTranslation('Products')
     const { t: gt } = useTranslation('Global')
 
-    const [ name, setName ] = useState<string>('')
-    const [ price, setPrice ] = useState<number>(0)
-    const [ stock, setStock ] = useState<number>(0)
+    const [ formData, setFormData ] = useState<ProductForm>({
+        name: '',
+        price: 0,
+        stock: 0
+    })
 
     useEffect(() => {
         if(product) {
             const { name, price, stock } = product
-            setName(name)
-            setPrice(price)
-            setStock(stock)
+            setFormData({ name, price, stock })
         } else {
-            setName('')
-            setPrice(0)
-            setStock(0)
+            setFormData({ name: '', price: 0, stock: 0})
         }
     }, [product])
 
@@ -42,16 +41,12 @@ const ProductModal =(props: Props) => {
         e.preventDefault()
         onSave({
             id: product?.id ?? 0,
-            name,
-            price,
-            stock 
+            ...formData
         })
     }
 
     const handleClose = () => {
-        setName('')
-        setPrice(0)
-        setStock(0)
+        setFormData({ name: '', price: 0, stock: 0})
         onClose && onClose()
     }
 
@@ -77,33 +72,24 @@ const ProductModal =(props: Props) => {
         </>}
     >
         <form id='product-form' onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label className='block text-sm'>{ t('name') }</label>
-                <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className='w-full p-2 border rounded bg-transparent dark:border-gray-600'
-                    required
-                />
-            </div>
-            <div>
-                <label className='block text-sm'>{ t('price') }</label>
-                <input
-                    value={price}
-                    onChange={(e) => setPrice(parseFloat(e.target.value))}
-                    className='w-full p-2 border rounded bg-transparent dark:border-gray-600'
-                    required
-                />
-            </div>
-            <div>
-                <label className='block text-sm'>{ t('stock') }</label>
-                <input
-                    value={stock}
-                    onChange={(e) => setStock(parseInt(e.target.value))}
-                    className='w-full p-2 border rounded bg-transparent dark:border-gray-600'
-                    required
-                />
-            </div>
+            <TextInputField
+                label={t('name')}
+                value={formData.name}
+                onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                required
+            />
+            <TextInputField
+                label={t('price')}
+                value={formData.price}
+                onChange={(e) => setFormData((prev) => ({ ...prev, price: parseInt(e.target.value) }))}
+                required
+            />
+            <TextInputField
+                label={t('stock')}
+                value={formData.stock}
+                onChange={(e) => setFormData((prev) => ({ ...prev, stock: parseInt(e.target.value) }))}
+                required
+            />
         </form>
     </Modal>)
 }
