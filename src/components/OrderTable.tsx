@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PencilIcon, TrashIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
+import { PencilSquareIcon, TrashIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
 
 import DataTable from './DataTable'
 
@@ -70,7 +70,7 @@ const OrderTable = (props: Props) => {
                         onClick={() => onEdit(o)}
                         className='p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded'
                     >
-                        <PencilIcon className="h-5 w-5" />
+                        <PencilSquareIcon className="h-5 w-5" />
                     </button>
                     <button
                         onClick={() => onDelete(o.id)}

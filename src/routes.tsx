@@ -5,6 +5,7 @@ import AuthenticatedLayout from './layouts/AuthenticatedLayout'
 import Dashobard from './pages/dashboard/index'
 import Products from './pages/dashboard/Products'
 import Orders from './pages/dashboard/Orders'
+import Users from './pages/Users'
 
 export const routes: RouteObject[] = [
     { path: '/', element: <Login />},
@@ -15,6 +16,13 @@ export const routes: RouteObject[] = [
             { index: true, element: <Dashobard /> },
             { path: 'products', element: <Products /> },
             { path: 'Orders', element: <Orders /> }
+        ]
+    },
+    {
+        path: '/users',
+        element: <AuthenticatedLayout />,
+        children: [
+            { index: true, element: <Users /> },
         ]
     }
 ]

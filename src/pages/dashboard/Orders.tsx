@@ -63,11 +63,11 @@ const Orders = () => {
 
     const handleSaveOrder = (o: Order) => {}
 
-    return (<div className="space-y-6">
-        <div className="flex justify-between items-center">
+    return (<div className='space-y-6'>
+        <div className='flex justify-between items-center'>
             <h1 className="text-2xl font-bold">{ t('orders') }</h1>
             <button
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
                 onClick={handleAddOrder}
             >
                 { gt('add') }

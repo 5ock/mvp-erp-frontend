@@ -8,7 +8,8 @@
     },
     "Sidebar": {
         "products": "Products",
-        "orders": "Orders"
+        "orders": "Orders",
+        "userManagement": "User Management"
     },
     "Products": {
         "products": "Products",
@@ -32,6 +33,15 @@
         "cancelled": "Cancelled",
         "actions": "Actions",
         "items": "Items"
+    },
+    "Users": {
+        "user": "User",
+        "name": "Name",
+        "role": "Role",
+        "email": "Email",
+        "actions": "Actions",
+        "userManagement": "User Management",
+        "password": "Password"
     },
     "Global": {
         "cancel": "Cancel",

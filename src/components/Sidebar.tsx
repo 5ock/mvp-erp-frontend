@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { CubeIcon, ReceiptRefundIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { CubeIcon, ReceiptRefundIcon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 
 type SidebarProps = {
@@ -55,6 +55,13 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             >
                 <ReceiptRefundIcon className='h-5 w-5 mr-2' />
                 { t('orders') }
+            </NavLink>
+            <NavLink 
+                to='/users'
+                className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
+            >
+                <UserIcon className='h-5 w-5 mr-2' />
+                { t('userManagement') }
             </NavLink>
         </nav>
     </div>)

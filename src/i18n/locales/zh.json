@@ -8,7 +8,8 @@
     },
     "Sidebar": {
         "products": "商品列表",
-        "orders": "訂單"
+        "orders": "訂單管理",
+        "userManagement": "使用者管理"
     },
     "Products": {
         "products": "商品列表",
@@ -32,6 +33,15 @@
         "cancelled": "已取消",
         "actions": "操作",
         "items": "品項"
+    },
+    "Users": {
+        "user": "使用者",
+        "name": "名稱",
+        "role": "角色",
+        "email": "信箱",
+        "actions": "操作",
+        "userManagement": "使用者管理",
+        "password": "密碼"
     },
     "Global": {
         "cancel": "取消",
