@@ -30,7 +30,8 @@
         "shipped": "已發貨",
         "delivered": "已送達",
         "cancelled": "已取消",
-        "actions": "操作"
+        "actions": "操作",
+        "items": "品項"
     },
     "Global": {
         "cancel": "取消",

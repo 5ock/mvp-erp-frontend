@@ -7,13 +7,12 @@ import PromptModal from '../../components/PromptModal'
 
 import type { Product } from '../../types/product'
 
+import fakeData from '../../data/product.json'
+
 const Products = () => {
     const { t } = useTranslation('Products')
     const { t: gt } = useTranslation('Global')
-    const [ products, setProducts ] = useState<Product[]>([
-        { id: 1, name: 'keyboard', price: 1200, stock: 15 },
-        { id: 2, name: 'Mouse', price: 800, stock: 30 }
-    ])
+    const [ products, setProducts ] = useState<Product[]>(fakeData)
     const [ editingProduct, setEditingProduct ] = useState<Product | null>(null)
     const [ isModalOpen, setModalOpen ] = useState<boolean>(false)
     const [ deletingProduct, setDeletingProduct ] = useState<Product | null>(null)

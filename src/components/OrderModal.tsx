@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 import Modal from './Modal'
+import TextInputField from './TextInputField'
+import Selector from './Selector'
 import type { Order, OrderItem } from '../types/order'
+
+// fake data
+import products from '../data/product.json'
 
 type Props = {
     open: boolean;
@@ -38,8 +44,73 @@ const OrderModal = (props: Props) => {
         }
     }, [selectedOrder, mode])
 
+    const handleItemChange = (index: number, field: keyof OrderItem, value: string | number) => {
+        const updated = [...formData.items]
+        updated[index] = { ...updated[index], [field]: field === 'quantity' || field === 'price' ? Number(value) : value }
+        setFormData((prev) => ({ ...prev, items: updated }))
+      }
+    
+      const addItem = () => {
+        if(formData.items.length >= products.length)
+            return
+
+        const availableProduct = productOptions.find(p => !formData.items.some(item => item.id === p.value))
+        if(!availableProduct)
+            return
+
+        setFormData((prev) => ({
+            ...prev,
+            items: [
+                ...prev.items,
+                {
+                    id: availableProduct.value,
+                    name: availableProduct.label,
+                    price: availableProduct.price,
+                    quantity: 1,
+                },
+            ]
+        }))
+      }
+    
+      const removeItem = (index: number) => {
+        const updated = [...formData.items]
+        updated.splice(index, 1)
+        setFormData((prev) => ({ ...prev, items: updated }))
+      }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const total = formData.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+        return console.log({
+            id: selectedOrder?.id ?? 0,
+            ...formData,
+            total,
+        })
+        onSave({
+            id: selectedOrder?.id ?? 0,
+            ...formData,
+            total,
+        })
+    }
+
     if(!open)
         return null
+
+    const productOptions = products.map(p => ({
+        value: p.id,
+        label: p.name,
+        price: p.price,
+        stock: p.stock
+    }))
+
+    const selectedProductIds = formData.items.map(item => item.id)
+
+    const getAvailableOptions = (currentId: number) => {
+        return productOptions.filter(
+            (p) => p.value === currentId || !selectedProductIds.includes(p.value)
+        )
+    }
 
     return (<Modal
         open={open}
@@ -74,7 +145,133 @@ const OrderModal = (props: Props) => {
             </>)
         }
     >
-        <div>asdf</div>
+        <form
+            id='order-form'
+            onSubmit={handleSubmit}
+            className='space-y-4'
+        >
+            <TextInputField
+                label={t('customer')}
+                value={formData.customer}
+                onChange={(e) => setFormData((prev) => ({...prev, customer: e.target.value}))}
+                readOnly={mode === 'view'}
+                required
+            />
+            <TextInputField
+                label={t('date')}
+                type='date'
+                value={formData.date}
+                onChange={(e) => setFormData((prev) => ({...prev, date: e.target.value}))}
+                readOnly={mode === 'view'}
+                required
+            />
+            <div>
+                <label className='block text-sm mb-2'>{ t('status') }</label>
+                <div className='flex flex-wrap gap-4 justify-between'>
+                    {(['pending', 'shipped', 'delivered', 'cancelled'] as Order['status'][]).map((status) => (
+                        <label key={status} className='flex items-center space-x-2'>
+                            <input
+                                type='radio'
+                                name='status'
+                                value={status}
+                                checked={formData.status === status}
+                                onChange={(e) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    status: e.target.value as Order['status'],
+                                    }))
+                                }
+                                readOnly={mode === 'view'}
+                                disabled={mode === 'view'}
+                            />
+                            <span>{ t(status) }</span>
+                        </label>
+                    ))}
+                </div>
+            </div>
+            <div>
+                <label className='block text-sm mb-2'>{t('items')}</label>
+                <div className='space-y-2'>
+                    { formData.items.map((item, index) => {
+                        const product = productOptions.find(p => p.value === item.id)
+                        const maxQuantity = product ? product.stock : 0
+
+                        return (<div key={item.id} className='flex gap-2 mb-2'>
+                            <div className='grid grid-cols-3 gap-2 mb-2'>
+                                <Selector
+                                    value={item.id}
+                                    onChange={(val) => {
+                                        const product = productOptions.find(p => String(p.value) === String(val))
+                                        if (product) {
+                                            const updated = [...formData.items]
+                                            updated[index] = {
+                                                ...updated[index],
+                                                id: product.value,
+                                                name: product.label,
+                                                price: product.price,
+                                                quantity: 1
+                                            }
+                                            setFormData((prev) => ({ ...prev, items: updated }))
+                                        }
+                                    }}
+                                    options={getAvailableOptions(item.id)}
+                                    disabled={mode === 'view'}
+                                />
+                                <input
+                                    type='number'
+                                    value={item.price}
+                                    className='p-2 border rounded bg-transparent dark:border-gray-600'
+                                    placeholder={t('price')}
+                                    readOnly
+                                />
+                                <input
+                                    type='number'
+                                    value={item.quantity}
+                                    onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                                    className='p-2 border rounded bg-transparent dark:border-gray-600'
+                                    placeholder={t('quantity')}
+                                    max={maxQuantity}
+                                    readOnly={mode === 'view'}
+                                />
+                            </div>
+                            {mode !== 'view' && (
+                                <button
+                                    type="button"
+                                    onClick={() => removeItem(index)}
+                                    className="flex self-center items-center text-red-400 hover:text-red-600 text-sm"
+                                    title={gt('delete')}
+                                >
+                                    <TrashIcon className='w-6 h-6' />
+                                </button>
+                            )}
+                        </div>
+                        )
+                    })}
+                </div>
+                { mode !== 'view' && (
+                    <button
+                        type="button"
+                        onClick={addItem}
+                        className={`mt-2 text-sm px-2 py-1 rounded inline-flex items-center gap-1 ${
+                            formData.items.length >= products.length
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'text-blue-600 hover:underline'
+                        }`}
+                        disabled={formData.items.length >= products.length}
+                        title={formData.items.length >= products.length ? t('noMoreProducts') : ''}
+                    >
+                        <PlusIcon className="w-4 h-4" />
+                        <span>{gt('add')}</span>
+                    </button>
+                )}
+                {formData.items.length > 0 && (
+                    <div className="text-right font-semibold mt-4">
+                        {t('total')}: {formData.items.reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString()}
+                    </div>
+                )}
+
+            </div>
+        </form>
     </Modal>)
 }
 

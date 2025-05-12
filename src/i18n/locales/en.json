@@ -12,6 +12,7 @@
     },
     "Products": {
         "products": "Products",
+        "product": "product",
         "name": "Name",
         "price": "Price",
         "stock": "Stock",
@@ -28,7 +29,9 @@
         "pending": "Pending",
         "shipped": "Shipped",
         "delivered": "Delivered",
-        "cancelled": "Cancelled"
+        "cancelled": "Cancelled",
+        "actions": "Actions",
+        "items": "Items"
     },
     "Global": {
         "cancel": "Cancel",

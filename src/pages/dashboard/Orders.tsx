@@ -12,10 +12,10 @@ const testData: Order[] = [
       customer: 'Alice',
       date: '2025-05-01',
       items: [
-        { id: 1, name: 'Keyboard', price: 50.0, quantity: 2 },
-        { id: 2, name: 'Mouse', price: 30.0, quantity: 1 }
+        { id: 1, name: 'Keyboard', price: 1200, quantity: 2 },
+        { id: 2, name: 'Mouse', price: 800, quantity: 1 }
       ],
-      total: 130.0,
+      total: 3200,
       status: 'pending',
     },
     {
@@ -23,13 +23,13 @@ const testData: Order[] = [
       customer: 'Bob',
       date: '2025-05-02',
       items: [
-        { id: 3, name: 'Monitor', price: 150.0, quantity: 1 },
-        { id: 4, name: 'Keyboard', price: 50.0, quantity: 1 }
+        { id: 1, name: 'Keyboard', price: 1200, quantity: 1 },
+        { id: 2, name: 'Mouse', price: 800, quantity: 1 }
       ],
-      total: 200.0,
+      total: 2000,
       status: 'shipped',
     }
-  ]
+]
 
 const Orders = () => {
     const { t } = useTranslation('Orders')

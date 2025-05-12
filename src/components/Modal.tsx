@@ -28,7 +28,7 @@ const Modal = (props: Props) => {
     
     return (<div
         className='fixed inset-0 z-50 bg-black/50 flex items-center justify-center'
-        onClick={onClose}
+        // onClick={onClose}
     >
         <div
             className='bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-md'
