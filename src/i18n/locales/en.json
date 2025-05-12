@@ -55,6 +55,11 @@
         "edit": "Edit",
         "delete": "Delete",
         "close": "Close",
-        "detail": "Detail" 
+        "detail": "Detail",
+        "deletePrompt": "Do you want to delete",
+        "changePassword": "Change PAssword",
+        "logout": "Log out",
+        "darkMode": "Dark Mode",
+        "lightMode": "Light Mode"
     }
 }

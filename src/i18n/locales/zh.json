@@ -56,6 +56,10 @@
         "delete": "刪除",
         "close": "關閉",
         "detail": "詳細資訊",
-        "deletePrompt": "是否要刪除"
+        "deletePrompt": "是否要刪除",
+        "changePassword": "變更密碼",
+        "logout": "登出",
+        "darkMode": "暗模式",
+        "lightMode": "亮模式"
     }
 }
