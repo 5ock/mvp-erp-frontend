@@ -4,11 +4,17 @@ import { useTranslation } from 'react-i18next'
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 
 import { useTheme } from '../contexts/ThemeContext'
+import { useUser } from '../contexts/UserContext'
+
+import UserData from '../data/users.json'
+
+import type { User } from '../types/user'
 
 const Login = () => {
     const { t, i18n } = useTranslation('Login')
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme()
+    const { setUser } = useUser()
 
     const [ username, setUsername ] = useState<string>('')
     const [ password, setPassword ] = useState<string>('')
@@ -16,16 +22,25 @@ const Login = () => {
 
     const handleLogin = () => {
         setErrorMsg('')
-        if(username && password)
-            navigate('/dashboard')
-        else
+        if(username && password) {
+            const user = UserData.find((u) => (
+                u.email === username
+            ))
+            
+            if(user) {
+                setUser(user as User)
+                navigate('/dashboard')
+            } else {
+                setErrorMsg(t('login_error'))
+            }
+        } else {
             setErrorMsg(t('login_error'))
+        }
     }
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng)
     }
-    
 
     return (<div className='min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4'>
         <div className='w-full max-w-md bg-white dark:bg-gray-800 text-black dark:text-white rounded-2xl shadow-lg p-6 sm:p-8 space-y-4'>

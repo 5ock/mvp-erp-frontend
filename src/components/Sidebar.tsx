@@ -3,6 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { CubeIcon, ReceiptRefundIcon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 
+import { usePermission } from '../utils/usePermission'
+
 type SidebarProps = {
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
@@ -10,6 +12,7 @@ type SidebarProps = {
 
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     const { t } = useTranslation('Sidebar')
+    const { canAccess } = usePermission()
     const location = useLocation()
     const sidebarRef = useRef<HTMLDivElement>(null)
 
@@ -42,27 +45,33 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             </button>
         </div>
         <nav className='p-4 space-y-2'>
-            <NavLink 
-                to='/dashboard/products'
-                className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
-            >
-                <CubeIcon className='h-5 w-5 mr-2' />
-                { t('products') }
-            </NavLink>
-            <NavLink 
-                to='/dashboard/orders'
-                className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
-            >
-                <ReceiptRefundIcon className='h-5 w-5 mr-2' />
-                { t('orders') }
-            </NavLink>
-            <NavLink 
-                to='/users'
-                className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
-            >
-                <UserIcon className='h-5 w-5 mr-2' />
-                { t('userManagement') }
-            </NavLink>
+            { canAccess('products', 'read') && (
+                <NavLink 
+                    to='/dashboard/products'
+                    className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
+                >
+                    <CubeIcon className='h-5 w-5 mr-2' />
+                    { t('products') }
+                </NavLink>
+            )}
+            { canAccess('orders', 'read') && (
+                <NavLink 
+                    to='/dashboard/orders'
+                    className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
+                >
+                    <ReceiptRefundIcon className='h-5 w-5 mr-2' />
+                    { t('orders') }
+                </NavLink>
+            )}
+            { canAccess('users', 'read') && (
+                <NavLink 
+                    to='/users'
+                    className={({ isActive }) => `flex items-center px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isActive ? 'bg-gray-300 dark:bg-gray-700 font-bold' : ''}`}
+                >
+                    <UserIcon className='h-5 w-5 mr-2' />
+                    { t('userManagement') }
+                </NavLink>
+            )}
         </nav>
     </div>)
 }

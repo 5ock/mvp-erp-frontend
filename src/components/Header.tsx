@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
-import { useTheme } from '../contexts/ThemeContext'
 import { useTranslation} from 'react-i18next'
 import { UserCircleIcon, SunIcon, MoonIcon, Bars3Icon } from '@heroicons/react/24/outline'
-// import { Menu, MenuButton,MenuItems, MenuItem } from '@headlessui/react'
+
+import { useUser } from '../contexts/UserContext'
+import { useTheme } from '../contexts/ThemeContext'
 
 type HeaderProps = {
     onToggleSidebar: () => void;
@@ -10,6 +11,7 @@ type HeaderProps = {
 }
 
 const Header = ({ onToggleSidebar, userName='Admin' }: HeaderProps) => {
+    const { user } = useUser()
     const { theme, toggleTheme } = useTheme()
     const { i18n, t } = useTranslation('Global')
     const [ menuOpen, setMenuOpen ] = useState(false)
@@ -50,7 +52,7 @@ const Header = ({ onToggleSidebar, userName='Admin' }: HeaderProps) => {
                 onClick={() => setMenuOpen((prev) => !prev)}
                 className='flex items-center space-x-1 hover:opacity-80'
             >
-                <span className='text-sm text-gray-800 dark:text-white'>{userName}</span>
+                <span className='text-sm text-gray-800 dark:text-white'>{user?.name}</span>
                 <UserCircleIcon className='w-6 h-6 text-gray-800 dark:text-white' />
             </button>
         
