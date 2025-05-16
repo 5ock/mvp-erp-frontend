@@ -60,6 +60,9 @@
         "changePassword": "Change Password",
         "logout": "Log out",
         "darkMode": "Dark Mode",
-        "lightMode": "Light Mode"
+        "lightMode": "Light Mode",
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Comfirm Password"
     }
 }

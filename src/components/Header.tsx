@@ -1,28 +1,35 @@
 import { useEffect, useState, useRef } from 'react'
 import { useTranslation} from 'react-i18next'
 import { UserCircleIcon, SunIcon, MoonIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 import { useUser } from '../contexts/UserContext'
 import { useTheme } from '../contexts/ThemeContext'
 
+import ChangePasswordModal from './ChangePasswordModal'
+
 type HeaderProps = {
     onToggleSidebar: () => void;
-    userName?: string;
 }
 
-const Header = ({ onToggleSidebar, userName='Admin' }: HeaderProps) => {
-    const { user } = useUser()
-    const { theme, toggleTheme } = useTheme()
+const Header = ({ onToggleSidebar }: HeaderProps) => {
+    const navigate = useNavigate()
     const { i18n, t } = useTranslation('Global')
+    const { user, setUser } = useUser()
+    const { theme, toggleTheme } = useTheme()
+    
     const [ menuOpen, setMenuOpen ] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null)
 
+    const [ openChangePassword, setOpenChangePassword ] = useState<boolean>(false)
+
     const handleChangePassword = () => {
-        alert('變更密碼功能尚未實作')
+        setOpenChangePassword(true)
     }
 
     const handleLogout = () => {
-        alert('登出功能尚未實作')
+        setUser(null)
+        navigate('/')
     }
 
     useEffect(() => {
@@ -98,22 +105,13 @@ const Header = ({ onToggleSidebar, userName='Admin' }: HeaderProps) => {
                 </div>
             )}
         </div>
-        {/* <div className='flex items-center space-x-4'>
-            <select
-                value={i18n.language}
-                className='bg-transparent border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm'
-                onChange={(e) => i18n.changeLanguage(e.target.value)}
-            >
-                <option value='en'>EN</option>
-                <option value='zh'>中文</option>
-            </select>
-            <button onClick={toggleTheme}>
-                { theme === 'dark'
-                    ? (<SunIcon className='h-5 w-5 text-yellow-400' />)
-                    : (<MoonIcon className='h-5 w-5 text-gray-600' />)
-                }
-            </button>
-        </div> */}
+
+        { openChangePassword && (
+            <ChangePasswordModal
+                open={openChangePassword}
+                onClose={() => setOpenChangePassword(false)}
+            />
+        )}
     </div>)
 }
 

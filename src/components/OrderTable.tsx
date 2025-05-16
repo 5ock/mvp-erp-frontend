@@ -4,6 +4,8 @@ import { PencilSquareIcon, TrashIcon, InformationCircleIcon } from '@heroicons/r
 
 import DataTable from './DataTable'
 
+import { usePermission } from '../utils/usePermission'
+
 import type { Order } from '../types/order'
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
 
 const OrderTable = (props: Props) => {
     const { t } = useTranslation('Orders')
+    const { canAccess } = usePermission()
     const { orders, onEdit, onDelete, onViewDetails } = props
     const [ sort, setSort ] = useState<{ field: string | number, direction: 'asc' | 'desc' }>({
         field: 'date',
@@ -74,12 +77,14 @@ const OrderTable = (props: Props) => {
                     >
                         <PencilSquareIcon className="h-5 w-5" />
                     </button>
-                    <button
-                        onClick={() => onDelete(o.id)}
-                        className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-300 rounded'
-                    >
-                        <TrashIcon className="h-5 w-5" />
-                    </button>
+                    { canAccess('orders', 'delete') && (
+                        <button
+                            onClick={() => onDelete(o.id)}
+                            className='p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-300 rounded'
+                        >
+                            <TrashIcon className="h-5 w-5" />
+                        </button>
+                    )}
                     <button
                         onClick={() => onViewDetails(o)}
                         className='p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-300 rounded'
