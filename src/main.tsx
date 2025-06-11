@@ -7,9 +7,11 @@ import { AppProvider } from './contexts/AppProviders.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import './i18n'
 
+const basename = import.meta.env.VITE_BASE_PATH || '/'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AppProvider>
         <App />
       </AppProvider>
